@@ -1,0 +1,31 @@
+<body style="padding-bottom: 200px; background-color: burlywood;">
+
+    <div class="container p-0 m-0" style="padding-top: 50px;padding-bottom: 50px;">
+      <div class="row  container m-0 " style="margin-bottom: 50px;padding-top: 20px;">
+          <div class="btn-group" role="group" aria-label="Basic example">
+              <p><button type="button" [disabled]="isfirstitem()" class="btn btn-primary" (click)="goprevious()" style="margin-right:20px ;background-color: gray;">Previos</button></p>
+          <p><button  type="button" class="btn btn-primary" (click)="goback()" style="background-color: black;margin-right: 20px;" >Back</button></p>
+      <p><button type="button" [disabled]="islastitem()" class="btn btn-primary" style="background-color: gray;" (click)="goNext()">Next</button></p>
+          </div>
+      </div>
+      <div class="row  container-fluid m-0">
+          <div class="col-4" style="padding-top: 82px;">
+              <h1 style="font-size: 50px;padding-bottom: 30px;"><b>{{currentprd?.name}} </b></h1>
+              <p class="price" style="color:gray; font-size: 22px;"><b>Price: {{currentprd?.price|currency:'EGY'}}</b></p>
+              <div style="color:gray; font-size: 22px;"><div id="in" *ngIf="currentprd?.quantity!=0;else Outofstock"><b>Quantity: {{currentprd?.quantity}} item</b></div>
+                  <ng-template id="in" #Outofstock><b style="color:red ;">Out Of Stock</b></ng-template>
+              </div>
+              <!-- <div style="padding-top: 40px;">
+                  <a routerLink="/AddProduct"><button type="button"  class="btn btn-primary"  (click)="Edit(currentprd)" id="btn">Edit</button></a>
+                  <a><button  type="button" class="btn btn-primary" (click)="Delete(currentprd)" id="btn">Delete</button></a>
+              </div> -->
+          </div>
+          <div class="col-8">
+              <img [src]="currentprd?.img" id="logoimg"  class="img-fluid" alt="Logo" width="500" height="500" >
+          </div>
+      </div>
+      
+  
+  </div>
+  
+  </body>

@@ -1,0 +1,21 @@
+
+ <div class="container "  >
+    
+   
+        
+       
+          <div style="width: 25rem;"  class="col-md-4 card" [ngStyle]="{'background-color':productquantity==1?'ghostwhite':'lightgrey'}" appRoundedshadowborder>
+            <img [src]="productimg"  alt="Denim Jeans" style="width:100%" >
+            <h1>{{productname}}</h1>
+            <p class="price"><b>Price : {{productprice|currency:'EGY'}}</b></p>
+            <div>
+                <b id="in">Quantity : {{productquantity}}</b>
+                
+            </div>
+            <button  style="background-color:gray ;color: white;" (click)="closeMe()">Close</button>
+          </div>
+      
+  
+</div> 
+
+

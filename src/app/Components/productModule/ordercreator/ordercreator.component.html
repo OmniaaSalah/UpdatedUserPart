@@ -1,0 +1,43 @@
+
+<body style="background-color: rgb(197, 156, 170);margin-bottom:100px ;">
+    <h1 style="text-align:center ;font-size:40px ;padding-top: 20px;"><b>Make Your Order</b></h1>
+    <h1 style="margin-left: 20px;"><b >Select Category : </b><select [(ngModel)]="SelectedCatogryID">
+        
+        <option *ngFor="let item of Catogrylist" [ngValue]="item.id">{{item.name}}</option>
+        
+    </select>
+    </h1>
+    <div ><app-products [receivedcatogryid]="SelectedCatogryID" (onclickonAddcart)="UpdateADDtocartfunc($event)">
+        
+        </app-products>
+    </div>
+    <h1 style="text-align:center ;font-size:40px ;padding-top: 40px;"><b>Make Your Order</b></h1>
+    
+    <table class="table" id="carttable" style="border:solid 3px black ;">
+        <tbody>
+        <th><b style="font-size:20px ;">ProductId</b></th>
+        <th><b style="font-size:20px ;">ProductName</b></th>
+        <th><b style="font-size:20px ;">ProductPrice</b></th>
+        <th><b style="font-size:20px ;">Count</b></th>
+        <th><b style="font-size:20px ;">Remove product</b></th>
+        
+        
+        <tr  *ngFor="let item of cartarray" >
+            <td>{{item.ProductID}}</td>
+            <td>{{item.ProductName}}</td>
+            
+            <td>{{item.Unitprice|currency:'EGY'}}</td>
+            <td>{{item.productcount}}</td>
+            
+            <button class="btn" (click)="Removecart(item.ProductID,cartarray)"  id="btn">Remove</button>
+            
+        </tr>
+    
+    
+    </tbody>
+    </table>
+    <div style="padding-top: 90px;">
+    <p><b style="font-size:20px ;">order total:{{totalprice}}</b></p>
+    <button class="btn" (click)="changequantity()" id="btn">place order</button>
+</div>
+    </body>

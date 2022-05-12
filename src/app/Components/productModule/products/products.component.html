@@ -1,0 +1,40 @@
+
+
+<body style="background-color: rgb(197, 156, 170);">
+    <h1 style="text-align:center ;font-size:40px ;padding-top: 60px;"><b>View Products</b></h1>
+  <div class="container-fluid m-0" style="margin-top:80px;">
+      
+  <div class="row " style="padding-top:60px ;">
+      
+      <ng-container  *ngFor="let item of newarray">
+        <div style="margin-left:130px;margin-top:30px;" class="col-md-4 card" [ngStyle]="{'background-color':item.quantity==1?'ghostwhite':'lightgrey'}" appRoundedshadowborder>
+          <img [src]="item.img"  alt="Denim Jeans" style="width:100%" (click)="PoPUPtheproduct(item)">
+          <h1>{{item.name}}</h1>
+          <p class="price"><b>Price :{{item.price|currency:'EGY'}}</b></p>
+          <div>
+              <div id="in" *ngIf="item.quantity!=0;else Outofstock"><b>Quantity: {{item.quantity}} item</b></div>
+              <ng-template id="in" #Outofstock><b style="color:red ;">Out Of Stock</b></ng-template>
+              
+          </div>
+          
+          
+          <div class=" mb-3 container">
+              <div class="row">
+                  <div class="col-7">
+              <b>Choose: </b><input style="width:100px" value="0" #countvalue type="number" #count>
+               </div>
+               <div class="col-5">
+                  <button class="btn" (click)="ADDtocartfunc(+count.value,item)"  style="color: white;background-color: black;">Add to Cart</button>  
+               </div>
+              </div> 
+            </div>
+              <button class="btn" (click)="openproductdetails(item.id)"  id="btn">Details</button>
+         
+        </div>
+        
+      </ng-container>
+  </div>
+  
+  </div>
+  
+  </body>

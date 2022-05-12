@@ -1,0 +1,151 @@
+<body style="background-color: rgb(197, 156, 170);">
+<form class="m-3" [formGroup]="RegFormgrp" (ngSubmit)="register()" style="width: 70%;">
+    <div class="mb-3">
+      <label for="fName" class="form-label"><b style="font-size: 20px;">Full Name</b></label>
+      <input type="text" formControlName="name" class="form-control" name="fName" placeholder="Enter Your Name" id="fName" [class.is-valid]="name.valid"
+        [class.is-invalid]="name.invalid && name.touched">
+      <div [hidden]="name.valid || name.untouched">
+        <small *ngIf="name.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">User Name is
+          Required</small>
+        <small *ngIf="name.errors?.['minlength']" id="helpId2" class="form-text text-muted d-block" class="alert-danger">User Name must be 3
+          letters at least</small>
+        <small *ngIf="name.errors?.['forbiddenName']" id="helpId3" class="form-text text-muted d-block">User name can't be
+          {{name.errors?.['forbiddenName']?.value}}</small>
+      </div>
+  
+    </div>
+  
+    <div class="mb-3">
+      <label for="uEmail" class="form-label"><b style="font-size: 20px;">Email</b></label>
+      <input type="Email" formControlName="email" class="form-control" name="uEmail" id="uEmail" placeholder="Enter Your Email" [class.is-valid]="email.valid"
+      [class.is-invalid]="email.invalid && email.touched">
+      <div [hidden]="email.valid || email.untouched">
+      <small *ngIf="email.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Email is
+        Required</small>
+      <small *ngIf="email.errors?.['email']" id="helpId2" class="form-text text-muted d-block" class="alert-danger">Must be valid Email</small>
+      </div>
+    </div>
+  
+    <div formGroupName="address">
+      <div class="mb-3">
+        <label for="uCity" class="form-label"><b style="font-size: 20px;">City</b></label>
+        <input type="text" formControlName="city" class="form-control" name="uCity" id="uCity" placeholder="Enter Your City" [class.is-valid]="city?.valid"
+        [class.is-invalid]="city?.invalid && city?.touched">
+        <div [hidden]="city?.valid || city?.untouched">
+          <small *ngIf="city?.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">City is
+            Required</small>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="uStreet" class="form-label"><b style="font-size: 20px;">Street</b></label>
+        <input type="text" formControlName="street" class="form-control" name="uStreet" id="uStreet" placeholder="Enter Your Street" [class.is-valid]="street?.valid"
+        [class.is-invalid]="street?.invalid && street?.touched">
+        <div [hidden]="street?.valid || street?.untouched">
+          <small *ngIf="street?.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Street is
+            Required</small>
+        </div>
+      </div>
+      
+  
+      <div class="mb-3">
+        <label for="postCode" class="form-label"> <b style="font-size: 20px;">Postal Code</b></label>
+        <input type="text" formControlName="postalCode" class="form-control" name="postCode" id="postCode" placeholder="Enter Your Postal Code" [class.is-valid]="postalCode?.valid"
+        [class.is-invalid]="postalCode?.invalid && postalCode?.touched">
+        <div [hidden]="postalCode?.valid || postalCode?.untouched">
+          <small *ngIf="postalCode?.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">PostalCode is
+            Required</small>
+        </div>
+      </div>
+    </div>
+  
+    <div formArrayName="mobileNo">
+      <div class="mb-3" *ngFor="let mobile of mobileNoArr.controls; let i=index">
+        <label for="uMobile + {{i}}" class="form-label"><b style="font-size: 20px;">Mobile No. {{i+1}} </b></label>
+        <input type="text" [formControlName]="i" class="form-control" name="uMob + {{i}}" id="uMobile + {{i}}"
+          placeholder=""  [class.is-invalid]="mobile.invalid && mobile.touched" [class.is-valid]="mobile.valid">
+          <button [hidden]="i<1" type="button" class="btn btn-secondary" (click)="removeMobile(mobile,i)">-</button>
+          <div [hidden]="mobile.valid || mobile.untouched"> 
+            <small *ngIf="mobile.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Mobile Number is required
+            </small>
+            <small *ngIf="mobile.errors?.['pattern']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Mobile Number must match 
+              pattern 01*********(0-9)
+            </small>
+          </div>
+      </div>
+      <br/>
+      <button  type="button" class="btn btn-secondary" (click)="addMobile()">+</button>
+    </div>
+  
+  
+    <div class="mb-3">
+      <label class="form-label"><b style="font-size: 20px;">How did you find us?</b></label>
+      <div class="btn-group" role="group">
+        <input type="radio" formControlName="reachedBy" value="FB" (change)="updateReachedOtherValidaiton()"
+          class="btn-check" name="reachedBy" id="fb" autocomplete="off">
+        <label class="btn btn-outline-primary" for="fb">Facebook</label>
+  
+        <input type="radio" formControlName="reachedBy" value="LinkedIn" (change)="updateReachedOtherValidaiton()"
+          class="btn-check" name="reachedBy" id="LinkedIn" autocomplete="off">
+        <label class="btn btn-outline-primary" for="LinkedIn">LinkedIn</label>
+  
+        <input type="radio" formControlName="reachedBy" value="Other" (change)="updateReachedOtherValidaiton()"
+          class="btn-check" name="reachedBy" id="other" autocomplete="off">
+        <label class="btn btn-outline-primary" for="other">Other</label>
+      </div>
+    </div>
+  
+    <div class="mb-3" [hidden]="reachedBy.value!='Other'">
+      <label for="reachedByOther" class="form-label"><b style="font-size: 20px;">Please specify other:</b></label>
+      <input type="text" formControlName="reachedByOther" class="form-control" name="reachedByOther" id="reachedByOther"
+        placeholder="" [class.is-invalid]="reachedByOther.invalid && reachedByOther.touched" [class.is-valid]="reachedByOther.valid">
+        <div [hidden]="reachedByOther.valid || reachedByOther.untouched">
+          <small [hidden]="reachedByOther.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger"> Is
+            Required</small>
+        
+          </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="uPass" class="form-label"><b style="font-size: 20px;">Password</b></label>
+      <input type="password" formControlName="password" class="form-control" name="uPass" id="uPass" placeholder="Enter Password" [class.is-valid]="password.valid"
+      [class.is-invalid]="password.invalid && password.touched">
+      <div [hidden]="password.valid || password.untouched">
+        <small *ngIf="password.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Password is
+          Required</small>
+          <small *ngIf="password.errors?.['pattern']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Must contain at least one number and one uppercase and lowercase letter and one non alphabetic, 
+            and at least 8 or more character</small>
+        </div>
+       
+      
+        
+    </div>
+  
+    <div class="mb-3">
+      <label for="uPassConfirm" class="form-label"><b style="font-size: 20px;">Confirm Password</b></label>
+      <input type="password" formControlName="confirmPassword" class="form-control" name="uPassConfirm" id="uPassConfirm"
+        placeholder="Repeat Password" [class.is-valid]="confirmPassword.valid"
+        [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched || RegFormgrp.errors?.['passwordMismatch']&& confirmPassword.touched">
+        <div [hidden]="confirmPassword.valid || confirmPassword.untouched">
+          <small *ngIf="confirmPassword.errors?.['required']" id="helpId" class="form-text text-muted d-block" class="alert-danger">Confirm Password is
+            Required</small>
+            
+          
+          </div>
+    </div>
+  
+    <div *ngIf="RegFormgrp.errors?.['passwordMismatch'] && (confirmPassword.touched)"
+      class="cross-validation-error-message alert alert-danger">
+      Password and confirm password don't match.
+    </div>
+  
+    <button [disabled]="RegFormgrp.invalid" type="submit" class="btn btn-success " style="background-color: black;" >Submit</button>
+    
+      <small *ngIf="RegFormgrp.invalid"  id="helpId" class="form-text text-muted d-block" class="cross-validation-error-message alert-danger">
+        <b>Pleaze complete All information before Submit</b>
+      </small>
+      
+     
+  </form>
+  
+</body>
