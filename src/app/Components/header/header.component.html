@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin: 0px;padding: 0px;margin-bottom:10px ;" >
     <div class="container-fluid " style="background-color:rgb(173, 173, 208);">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,14 +12,21 @@
           <a class="nav-link" routerLink="/Products/Order" routerLinkActive="active" ><b style="font-size: 20px;">Order</b></a>
           <a class="nav-link" routerLink="/Basic/ContactUs" routerLinkActive="active" ><b style="font-size: 20px;">Contactus</b></a>
           <a class="nav-link" routerLink="/Basic/AboutUs" routerLinkActive="active" ><b style="font-size: 20px;">Aboutus</b></a>
-          <a class="nav-link" routerLink="/Authen/Login" routerLinkActive="active" ><b style="font-size: 20px;">Login</b></a>
-          
+          <a class="nav-link" routerLink="/Authen/Login" routerLinkActive="active" [hidden]="isuserlogged"><b style="font-size: 20px;">Login</b></a>
+          <a class="nav-link" (click)="Logout()" routerLink="/Home" routerLinkActive="active"  [hidden]="!isuserlogged" ><b style="font-size: 20px;">Logout</b></a>
           <a class="nav-link" routerLink="/Authen/Register" routerLinkActive="active" ><b style="font-size: 20px;">Register</b></a>
         </div>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
             <button class="btn btn-outline-success" style="background-color:black ;color: aliceblue;" type="submit">Search</button>
         </form>
+        <pre>
+
+        </pre>
+        <img rel="icon" type="image/x-icon" (click)="OpenCart()" src="assets/shopping-cart_icon-icons.com_69460.ico" width="45px"/>
+        <p ><b style="font-size:22px ;">{{productcount}}</b></p>
+
+        
       </div>
     </div>
   </nav>

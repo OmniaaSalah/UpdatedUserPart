@@ -2,11 +2,17 @@
 
 <body style="background-color: rgb(197, 156, 170);">
     <h1 style="text-align:center ;font-size:40px ;padding-top: 60px;"><b>View Products</b></h1>
-  <div class="container-fluid m-0" style="margin-top:80px;">
+    <h1 style="margin-left: 20px;"><b >Select Category : </b><select [(ngModel)]="SelectedCatogryID" (ngModelChange)="select()">
+        
+      <option *ngFor="let item of Catogrylist" [ngValue]="item.id">{{item.name}}</option>
       
+  </select> 
+    </h1>
+  <div class="container-fluid m-0" style="margin-top:80px;">
+    
   <div class="row " style="padding-top:60px ;">
       
-      <ng-container  *ngFor="let item of newarray">
+      <ng-container  *ngFor="let item of newarr">
         <div style="margin-left:130px;margin-top:30px;" class="col-md-4 card" [ngStyle]="{'background-color':item.quantity==1?'ghostwhite':'lightgrey'}" appRoundedshadowborder>
           <img [src]="item.img"  alt="Denim Jeans" style="width:100%" (click)="PoPUPtheproduct(item)">
           <h1>{{item.name}}</h1>

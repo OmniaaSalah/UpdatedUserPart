@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Icart } from '../View Models/icart';
 import { Iproduct } from '../View Models/iproduct';
 
 @Injectable({
@@ -10,7 +11,12 @@ import { Iproduct } from '../View Models/iproduct';
 export class ProductsAPIService {
   prodnumlist:number[]=[];
   newproduct:Iproduct={} as Iproduct;
+  
   private httpoption;
+  
+  newarray:Iproduct[]=[];
+ 
+  
   constructor(private httpclient:HttpClient) {
    
     this.httpoption={
@@ -46,11 +52,13 @@ export class ProductsAPIService {
   }
   EditProduct(newproduct:Iproduct,prodID:number):Observable<Iproduct>
   {
-    return this.httpclient.patch<Iproduct>(environment.APIBaseURL+'Products/Update/'+prodID,newproduct);
+    return this.httpclient.put<Iproduct>(environment.APIBaseURL+'Products/Update/'+prodID,newproduct);
   }
   DeleteProduct(prodID:number):Observable<Iproduct>
   {
     return this.httpclient.delete<Iproduct>(environment.APIBaseURL+'Products/Delete/'+prodID)
   }
+
+  
 
 }

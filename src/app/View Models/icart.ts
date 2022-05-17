@@ -1,7 +1,7 @@
 export interface Icart {
-    ProductID:number,
-    ProductName:string,
-    Unitprice:number,
+    productID:number,
+    productName:string,
+    unitprice:number,
     productcount:number,
     totalquantityofthisproduct:number
 }

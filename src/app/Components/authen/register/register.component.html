@@ -1,5 +1,5 @@
-<body style="background-color: rgb(197, 156, 170);">
-<form class="m-3" [formGroup]="RegFormgrp" (ngSubmit)="register()" style="width: 70%;">
+<body style="background-color: rgb(197, 156, 170);margin-left: 11px;margin-right: 11px;">
+<form  [formGroup]="RegFormgrp" (ngSubmit)="register()" style="width: 70%;margin-left: 120px;">
     <div class="mb-3">
       <label for="fName" class="form-label"><b style="font-size: 20px;">Full Name</b></label>
       <input type="text" formControlName="name" class="form-control" name="fName" placeholder="Enter Your Name" id="fName" [class.is-valid]="name.valid"
@@ -83,15 +83,15 @@
       <div class="btn-group" role="group">
         <input type="radio" formControlName="reachedBy" value="FB" (change)="updateReachedOtherValidaiton()"
           class="btn-check" name="reachedBy" id="fb" autocomplete="off">
-        <label class="btn btn-outline-primary" for="fb">Facebook</label>
+        <label class="btn btn-outline-primary" for="fb"><b style="font-size: 20px;">Facebook</b></label>
   
         <input type="radio" formControlName="reachedBy" value="LinkedIn" (change)="updateReachedOtherValidaiton()"
           class="btn-check" name="reachedBy" id="LinkedIn" autocomplete="off">
-        <label class="btn btn-outline-primary" for="LinkedIn">LinkedIn</label>
+        <label class="btn btn-outline-primary" for="LinkedIn"><b style="font-size: 20px;">LinkedIn</b></label>
   
         <input type="radio" formControlName="reachedBy" value="Other" (change)="updateReachedOtherValidaiton()"
           class="btn-check" name="reachedBy" id="other" autocomplete="off">
-        <label class="btn btn-outline-primary" for="other">Other</label>
+        <label class="btn btn-outline-primary" for="other"><b style="font-size: 20px;">Other</b></label>
       </div>
     </div>
   

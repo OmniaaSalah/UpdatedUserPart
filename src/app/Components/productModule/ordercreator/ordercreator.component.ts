@@ -1,10 +1,12 @@
 import { Component,  OnInit, ViewChild } from '@angular/core';
-import { Icatogry } from 'src/app/View Models/icatogry';
+
 
 import { Icart } from 'src/app/View Models/icart';
 import { CatogryAPIService } from 'src/app/Services/catogry-api.service';
 import { ProductsAPIService } from 'src/app/Services/products-api.service';
-import { ProductsComponent } from '../products/products.component';
+import { UserService } from 'src/app/Services/user.service';
+import { CartApiService } from 'src/app/Services/cart-api.service';
+
 
 
 
@@ -14,88 +16,79 @@ import { ProductsComponent } from '../products/products.component';
   styleUrls: ['./ordercreator.component.scss']
 })
 export class OrdercreatorComponent implements OnInit {
-  @ViewChild(ProductsComponent)productsobj !:ProductsComponent;
+  
   receivepop:number=0;
-  SelectedCatogryID:number=1;
-  Catogrylist:Icatogry[]=[];
-  receivedcart:Icart={}as Icart;
+ 
   totalprice:number=0;
   cartarray:Icart[]=[];
-  constructor(private catogryapiservice:CatogryAPIService) {
-   
+  constructor(private catogryapiservice:CatogryAPIService,private proservice:ProductsAPIService,private userservice:UserService,private cartservice:CartApiService) {
+  
+    
    }
 
   ngOnInit(): void {
-  
-    this.catogryapiservice.getAllproduct().subscribe(catlist=>{this.Catogrylist=catlist});
+   
+    if(this.userservice.IsUserLogged)
+    { this.cartservice.getCart().subscribe(catlist=>{this.cartservice.cartarray=catlist;this.cartarray=this.cartservice.cartarray;this.cartservice.totalprice=0;this.cartservice.cartarray.forEach(element => {
+      this.cartservice.totalprice+=element.productcount*element.unitprice;
+      
+    });
+    this.totalprice=this.cartservice.totalprice;
+  });
+    }
+
+    
+    
   }
 
   changequantity(){
     if(confirm("Are you sure to Make This Order"))
-    {this.productsobj.newarray.forEach(elementchild => {
-      this.cartarray.forEach(elementparent => {
-        if(elementchild.id==elementparent.ProductID)
+    {this.proservice.newarray.forEach(elementchild => {
+      this.cartservice.cartarray.forEach(elementparent => {
+        if(elementchild.name==elementparent.productName)
         {
-          console.log(elementchild.id);
+        
           elementchild.quantity=elementchild.quantity-elementparent.productcount;
+          this.proservice.EditProduct(elementchild,elementchild.id).subscribe(prolist=>{ this.proservice.getAllproduct().subscribe(prolist=>{this.proservice.newarray=prolist;});});
+          
+         
         }
       });
+      
+      
     });
-    this.totalprice=0;
-   this.cartarray=[] as Icart[];
+
+    this.cartservice.totalprice=0;
+    this.totalprice=this.cartservice.totalprice;
+    this.cartservice.DeleteAllcart().subscribe(catlist=>{this.cartarray=catlist});
    }
   }
-  Removecart(val:number,cartarray:Icart[])
+  Removecart(val:number)
   { 
-    var newcartarray:Icart[]=[];
-    cartarray.forEach(element => {
-      if(element.ProductID!=val)
+   
+    this.cartservice.cartarray.forEach(element => {
+      if(element.productID!=val)
       {
-        newcartarray.push(element);
+        
       }else{
-        this.totalprice-=element.productcount*element.Unitprice;
+        console.log(element.productID);
+        this.cartservice.Deleteproductincart(element.productID).subscribe(cartlist=>{});
+        this.cartservice.getCart().subscribe(catlist=>{
+          location.reload();
+          this.cartservice.totalprice-=element.productcount*element.unitprice;
+          this.totalprice=this.cartservice.totalprice;});
+       
        
       }
       
     });
   
-    if(newcartarray)
-   { 
-     this.cartarray=newcartarray;
-   }
+    
+    this.cartservice.getCart().subscribe(catlist=>{this.cartarray=catlist});
+   
 
   }
-  UpdateADDtocartfunc(cat:Icart)
-  {
-    
-    var incresequantityonly=0;
-    this.cartarray.forEach(element => {
-     
-      if(element.ProductID==cat.ProductID )
-      {   incresequantityonly=1;
-        if(element.productcount+cat.productcount<cat.totalquantityofthisproduct)
-         {element.productcount+=cat.productcount;
-         
-         }
-         else{
-          this.totalprice-=element.productcount*element.Unitprice;
-         }
 
-         
-      }
-    });
-    ``
-    if(incresequantityonly==0)
-    {this.cartarray.push(cat);}
 
-    this.cartarray.forEach(element => {
-      if(element.ProductID==cat.ProductID)
-      {
-  
-        this.totalprice+=element.productcount*element.Unitprice;
-      }
-    });
-  
- }
 
 }

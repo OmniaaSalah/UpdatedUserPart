@@ -10,9 +10,10 @@ import { FormsModule } from '@angular/forms';
 
 import { OrdercreatorComponent } from './ordercreator/ordercreator.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserAuthGuard } from '../Guard/user-auth.guard';
 
 const routes:Routes=[
-{path:"Order",component:OrdercreatorComponent},
+{path:"Order",component:OrdercreatorComponent,canActivate:[UserAuthGuard]},
 {path:":pID",component:ProductDetailsComponent},
 
 {path:'',component:ProductsComponent}]
